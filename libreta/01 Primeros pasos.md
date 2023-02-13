@@ -1,9 +1,13 @@
 # Cosas necesarias para de desarrollo de contratos inteligentes en  Etehreum
 
 - Lenguaje de desarrollo: solidity
+
 - Wallet: MetaMask, Exodus, etc.
+
 - Entorno de desarrollo (IDE): Remix IDE
+
 - Sistema de almacenamiento: InterPlanetary File System (IPFS)
+
 - Etherscan: para visualizar transacciones, bloques y mineros
   ![Gráfico de los necesario en  desarrollo de contratos en ETH](./img/01_img1.png "Gráfico de los necesario en  desarrollo de contratos en ETH")
   
@@ -107,7 +111,6 @@ contract DemoContract
 
 Estas propiedades son un conjunto dé funciones globales que nos proporcionan ciertos datos de transacciones o del manejo de bloques en etehereum u otras side-chains
 
-
 `block.blockhash(int)`Devuelve el hash de un bloque dado de los últimos 250 bloques
 `block.coinbase` Devuelve la dirección del minero que esta minando el bloque actual
 `block.difficulty` Devuelve la dificultad del bloque actual
@@ -123,8 +126,6 @@ Estas propiedades son un conjunto dé funciones globales que nos proporcionan ci
 `now` Devuelve el timestamp del bloque actual en un entero, es un alias del `block.timestamp`
 `tx.gasprice` Devuelve el costo del _gas_ de la transacción
 `tx.origin` Devuelve el dato del emisor original de la transacción 
-
-
 
 ## Función keccak256()
 
