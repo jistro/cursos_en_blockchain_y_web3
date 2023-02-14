@@ -53,3 +53,92 @@ hay ciertos caracteres especiales en solidity cuando se trata de strings y estos
 | \v       | Agrega tabulación vertical                        |
 | \xNN     | Representa el valor de un carácter en Hexagesimal |
 | \uNNN    | Representa el valor de un carácter en UTF-8       |
+
+### Variables booleanas
+
+Estas son semejantes a javascript, se declaran de la siguiente manera
+
+```solidity
+bool <nombre_var> = true;
+bool <nombre_var> = false;
+```
+
+### Variables bytes o byte
+
+Estas almacenan bytes o bytes, se declaran de la siguiente manera
+
+```solidity
+//siendo x la cantidad de bytes almacenados
+bytes<X> <nombre_var>;
+bite <nombre_var>; //para almacenar un solo byte
+```
+
+`bytes` permite almacenar de 1 a 32 bytes en un intervalo de 1 unidad
+
+`byte` solo permite almacenar un único byte
+
+### Variable address
+
+Permite almacenar la dirección de la cuenta 
+
+```solidity
+address <nombre_var>;
+```
+
+### Variables enums
+
+Son una manera de que el usuario pueda crear su propio tipo de datos
+
+```solidity
+enum nombre_enumeracion 
+{
+    valores_enumeracion1, ... ,valor enumeracionN
+}
+```
+
+Como declarar una variable tipo `enum`
+
+```solidity
+//como invocarlo
+nombre_enumeracion ;
+```
+
+Existen dos maneras de modificar este tipo de variables
+
+Especificando la opción de `enum`
+
+```solidity
+<nombre_variable> = <nombre_enumeracion>.<valor_enumeracion>
+```
+
+Usando el indice
+
+```solidity
+<nombre_variable> = <nombre_enumeracion>( <posicion> );
+```
+
+Ejemplo:
+
+```solidity
+enum estado {ON,OFF}   
+/* recordar que 
+    ON  es el indice 0
+    OFF es el indice 1
+*/
+    estado interruptor;
+
+    function encender() public
+    {
+        interruptor = estado.ON;
+    }
+    
+    function accion(uint _k) public 
+    {
+        interruptor = estado(_k);
+    }
+    
+    function devolverDatos() public view returns(estado)
+    {
+        return interruptor;
+    }
+```
