@@ -9,9 +9,7 @@ como javascript la declaración de variables en solidity se conforma de la sigui
 <tipo de dato> <nombre variable> = <valor>;
 ```
 
-## Tipos de variable
-
-### Variables enteras
+## Variables enteras
 
 Existen dos tipos de enteros, con signo `int` y sin signo `uint`
 
@@ -29,7 +27,7 @@ uint<X> <variable>;
 
 Siendo _X_ el numero de bits, este puede variar de 8 a 256 **en múltiplos de 8**, por defecto solidity asigna 256 bits si no se especifica
 
-### Variables string
+## Variables string
 
 Las strings que se crean son del tipo UTF-8
 
@@ -54,7 +52,7 @@ hay ciertos caracteres especiales en solidity cuando se trata de strings y estos
 | \xNN     | Representa el valor de un carácter en Hexagesimal |
 | \uNNN    | Representa el valor de un carácter en UTF-8       |
 
-### Variables booleanas
+## Variables booleanas
 
 Estas son semejantes a javascript, se declaran de la siguiente manera
 
@@ -63,7 +61,7 @@ bool <nombre_var> = true;
 bool <nombre_var> = false;
 ```
 
-### Variables bytes o byte
+## Variables bytes o byte
 
 Estas almacenan bytes o bytes, se declaran de la siguiente manera
 
@@ -77,7 +75,7 @@ bite <nombre_var>; //para almacenar un solo byte
 
 `byte` solo permite almacenar un único byte
 
-### Variable address
+## Variable address
 
 Permite almacenar la dirección de la cuenta 
 
@@ -85,7 +83,7 @@ Permite almacenar la dirección de la cuenta
 address <nombre_var>;
 ```
 
-### Variables enums
+## Variables enums
 
 Son una manera de que el usuario pueda crear su propio tipo de datos
 
@@ -131,14 +129,114 @@ enum estado {ON,OFF}
     {
         interruptor = estado.ON;
     }
-    
+
     function accion(uint _k) public 
     {
         interruptor = estado(_k);
     }
-    
+
     function devolverDatos() public view returns(estado)
     {
         return interruptor;
     }
 ```
+
+## Unidades de tiempo
+
+Estos se trabajan por enteros (`uint`) y el tiempo se cuenta por segundos, es decir si declaramos 1 minuto se almacena como 60 segundos
+
+```solidity
+ uint segundos = 1 seconds;
+ uint minutos = 1 minutes;
+ uint horas = 1 hours;
+ uint dias = 1 days;
+ uint semanas = 1 weeks;
+ uint annos = 1 years;
+```
+
+Podemos combinar el uso de `now` con las unidades de tiempo, recordar que saldrá como resultado el timestamp en el horario de Unix
+
+```solidity
+function MasSemanas() public view returns(uint)
+{
+       return now + 1 weeks;
+}
+```
+
+## Casteo de variables
+
+Este nos sirve para transformar variables de un bit a otro tipo de bit de casi cualquier tipo de variable y/o transformar de una variable a otra
+
+el pseudocodigo es asi
+
+```pcode
+uint<Y> ( uint<X> varTransformar ); 
+```
+
+Siendo *X* y *Y* los bits
+
+Ejemplo
+
+```solidity
+uint8 entero8Bits = 42;
+uint64 entero64Bits = 6000;
+uint enteroNormal = 1000000;
+
+int16 enteroCnSigno16bits = 156;    
+int120 enteroCnSigno120bits = 900000;
+int enteroCnSignoNormal = 5000000;
+
+uint64 public casteoUno     = uint64(entero8Bits);
+uint64 public casteoDos     = uint64(enteroCnSignoNormal);
+uint8  public casteoTres    = uint8 (enteroCnSigno16bits);
+int    public casteoCuatro  = int   (enteroNormal);
+int    public casteoCinco   = int   (entero64Bits);
+```
+
+## Modificadores
+
+Estos declaran los permisos y privilegios  del comportamientp de una variable o funcion
+
+El pseudocodigo se muestra de esta manera
+
+```solidity
+<tipoDeDato> [modificador] <nombreDeVariable>;
+```
+
+### modificador _public_
+
+Son visibles para todos los usuarios y contratos en la cadena, es decir que son accesibles para lectura y escritura por cualquier usuario y/o contrato
+
+Ejemplo:
+
+```solidity
+int8 public edad = 28;
+string public nombre = "Cosme Fulanito";
+```
+
+### modificador private
+
+Este modificador solo puede leer/escrbir solo dentro del contrato que las define. No puede aaceder a ellas un usuario o contrato externo
+
+Ejemplo:
+
+```solidity
+contract contratoEjamplo 
+{
+    address private usuarioInteraccion;
+}
+```
+
+### modificador internal
+
+Similar a `private` pero cualquier otro contrato puede verlas, se crea una herencia donde el contrato padre hereda las variables y/o funciones del contrato hijo accediendo a estas, pero no fuera del contrato padre
+
+
+
+Para poder comprender los tipos de permisos de lectura/escritura podemos referirnos a esta tabla 
+
+| Modificador  | Contrato mismo | Usuario/Otros contratos | Contrato hijo |
+|:------------:|:--------------:|:-----------------------:|:-------------:|
+| **public**   | ✔️             | ✔️                      | ✔️            |
+| **internal** | ✔️             | ❌                       | ❌             |
+| **private**  | ✔️             | ❌                       | ✔️            |
