@@ -231,8 +231,6 @@ contract contratoEjamplo
 
 Similar a `private` pero cualquier otro contrato puede verlas, se crea una herencia donde el contrato padre hereda las variables y/o funciones del contrato hijo accediendo a estas, pero no fuera del contrato padre
 
-
-
 Para poder comprender los tipos de permisos de lectura/escritura podemos referirnos a esta tabla 
 
 | Modificador  | Contrato mismo | Usuario/Otros contratos | Contrato hijo |
@@ -240,3 +238,15 @@ Para poder comprender los tipos de permisos de lectura/escritura podemos referir
 | **public**   | ✔️             | ✔️                      | ✔️            |
 | **internal** | ✔️             | ❌                       | ❌             |
 | **private**  | ✔️             | ❌                       | ✔️            |
+
+## Modificador de memoria
+
+En solidity hay dos lugares donde puedes guardar ya sea de manera permanente o temporal, por lo general solidity pone por defecto el almacenar de manera permanente solo si no están almacenadas en alguna `function` mientras que las que están almacenadas en algún `function` ya sea de manera común o anidada se guardan de manera temporal. Podemos controlar como se almacenan estas variables usando los modificadores correspondientes
+
+### modificador memory
+
+Este tipo de modificador almacena los datos de manera temporal
+
+### modificador storage
+
+Este tipo de variable se guarda de manera permanente en la red de blockchain
