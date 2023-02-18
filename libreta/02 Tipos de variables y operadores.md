@@ -1,4 +1,4 @@
-# Tipos de variables y operadores
+# Tipos de variables
 
 como javascript la declaración de variables en solidity se conforma de la siguiente manera
 
@@ -42,8 +42,8 @@ hay ciertos caracteres especiales en solidity cuando se trata de strings y estos
 |:--------:| ------------------------------------------------- |
 | \n       | Inicia nueva linea                                |
 | \\\      | Agrega \ al texto                                 |
-| \'       | Agrega camilla simple al texto                    |
-| \"       | Agrega camilla al texto                           |
+| \\'      | Agrega camilla simple al texto                    |
+| \\"      | Agrega camilla al texto                           |
 | \b       | Agrega "Backspace"                                |
 | \f       | Agrega salto de pagina                            |
 | \r       | Agrega salto de linea                             |
@@ -247,6 +247,60 @@ En solidity hay dos lugares donde puedes guardar ya sea de manera permanente o t
 
 Este tipo de modificador almacena los datos de manera temporal
 
+Ejemplo:
+
+```solidity
+uint8 memory age;
+```
+
 ### modificador storage
 
 Este tipo de variable se guarda de manera permanente en la red de blockchain
+
+```solidity
+address storage lender;
+```
+
+## Modificador payable
+
+Este modificador permite enviar y recibir la moneda local del sistema de blockchain **este única y exclusivamente se usa en el tipo de variable `address`** y solamente con el usuario no con el que hizo deploy al contrato
+
+```solidity
+address payable lender;
+```
+
+# Tipos de operadores matemáticos
+
+Solidity permite el uso de estos tipos de operadores
+
+## Operadores matemáticos
+
+| forma | operación      | Declaración | Resultado |
+|:-----:|:--------------:|:-----------:| --------- |
+| +     | suma           | 2+1         | 3         |
+| -     | resta          | 2-1         | 1         |
+| \*    | multiplicación | 2*2         | 4         |
+| /     | división       | 2/2         | 1         |
+| %     | modulo         | 2/2         | 1         |
+| \*\*  | exponenciación | 2\*\*2      | 4         |
+
+## Operadores de comparación
+
+| operador | descripción     |
+| -------- |:---------------:|
+| >        | mayor a         |
+| <        | menor a         |
+| >=       | mayor o igual a |
+| <=       | menor o igual a |
+| ==       | igual a         |
+| !=       | diferente a     |
+
+## Operadores booleanos
+
+| operador | descripción |
+| -------- |:-----------:|
+| !        | negación    |
+| &&       | and         |
+| |\|      | or          |
+| ==       | igualdad    |
+| !=       | inigualdad  |
