@@ -58,6 +58,75 @@ nombre_mapping [_key] = _value;
 nombre_mapping [_key];
 ```
 
+# Array
+
+Como cualquier lenguaje de programación, un array es un tipo de dato estructurado que almacena un conjunto homogéneo de datos. Hay dos tipos de arrays, de longitud fija y dinámicos.
+
+## Array de longitud fija
+
+En este tipo de array esta definido la longitud de esta
+
+```solidity
+<tipo_de_dato> [<longitud>] [public]* <nombreArray>;
+```
+
+Por ejemplo, pensemos en un array publica que muestre la lista de una clase
+
+```solidity
+string [22] public listaAumnos;
+```
+
+## Array dinámico
+
+Este tipo de arrays no tienen definido su longitud
+
+```solidity
+<tipo_de_dato> [] [public]* <nombreArray>;
+```
+
+Por ejemplo pensemos en una lista de direcciones que pasan por nuestro contrato
+
+```solidity
+address [] public listaAddress;
+```
+
+## Inicializar de un array
+
+Si bien no es muy recomendable hacer eso en un contrato real, solidity nos permite esto, usemos nuestros ejemplos anteriores
+
+```solidity
+//longitud fija
+string [22] public listaAumnos = [jose,luis,maria,...,pedro];
+//longitud dinamica
+address [] public listaAddress = [0x808Fd5c4cF64F7f6b0042630335D7543d5782c1a,
+                                  ...,
+                                  0xC3b8E8c851A51f5e6115f851121655b2689Cc3b2]
+```
+
+## Lectura y escritura con array
+
+Solidity como cualquier otro lenguaje nos permite leer/escribir en arrays
+
+```solidity
+//lectura
+<nombre_array>[<posicion>];
+//escritura
+<nombre_array>[<posicion>] = <valor>;
+```
+
+## Función .push() y length
+
+Hay dos funciones que permiten agregar un elemento al final y ver la longitud del array, los cuales son `.push()` y `.length` respectivamente.
+
+```solidity
+// funcion push
+nombreArray.push(valor);
+// funcion length
+nombreArray.length;
+```
+
+Por obvios motivos, `.push()` solo sirve para arrays dinámicos, ya que estos no tienen definido su longitud por lo tanto esta función nos ayuda a colocarlo al ultimo.
+
 
 
 
