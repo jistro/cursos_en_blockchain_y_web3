@@ -17,6 +17,6 @@ Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamen
 De manera temporal este se ha ordenado solo para el curso que se esta tomando, en un futuro se dividira en dos carpetas que indican los dos cursos tomados
     
     .
-    ├── 📁Ejercicios                   # Contiene todos los ejercicios del curso
-    ├── 📁Librta de notas              # Documentaion del curso en formato markdown de cada capitulo de este
+    ├── 📁Ejercicios        # Contiene todos los ejercicios del curso
+    ├── 📁Librta de notas   # Documentaion del curso en formato markdown de cada capitulo de este
     └── README.md
