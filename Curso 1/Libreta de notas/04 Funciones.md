@@ -96,3 +96,16 @@ Indicamos que no accederemos a los datos dentro de la `function` solamente va a 
 ## payable
 
 Como lo indica el nombre, permite realizar un pago recibiendo la criptomoneda nativa
+
+# Eventos
+
+Estos eventos comunican un suceso en la blockchain 
+
+```solidity
+//Declaramos un evento
+event <nombre_evento> (types);
+//Emitimos un evento
+emit <nombre evento> (values);
+```
+
+Cunado invocamos un evento en el smart contract los argumentos se almacenan en una área especial de la transacción que se asocia a la dirección del contrato y va a permanecer allí en el bloque mientras se puede acceder al bloque;
