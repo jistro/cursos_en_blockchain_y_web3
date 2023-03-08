@@ -19,5 +19,6 @@ De manera temporal este se ha ordenado solo para el curso que se esta tomando, e
     .
     ├── 📁 Curso 1        # Contiene los documentos del curso 1
     |    ├── 📁Ejercicios
-    |    └── 📁Libreta de notas 
+    |    ├── 📁Libreta de notas 
+    |    └── 📁Proyectos de curso
     └── README.md
