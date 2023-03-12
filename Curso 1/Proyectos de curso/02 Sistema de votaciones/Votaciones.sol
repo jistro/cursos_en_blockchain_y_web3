@@ -17,6 +17,26 @@ Orden de la tabla de datos
 */
 contract Votacion
 {
+    //Funcion auxiliar que transforma un uint a un string
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = byte(uint8(48 + _i % 10));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+
     //Direccion del propietario del contrato
     address public owner;
 
@@ -73,4 +93,50 @@ contract Votacion
         VotosCandidato[_nombreCandidato]++;
     }
 
+    //Podemos ver la cantidad de votos por candidato
+    function Ver_Votos(string memory _nombreCandidato) public view returns(uint)
+    { return (VotosCandidato[_nombreCandidato]); } 
+
+    function Hacer_Corte() public view returns(string memory)
+    {
+        //guardamos en una variable los candidatos con sus respectivos votos
+        string memory resultados="";
+
+        for ( uint num=0; num < ListaNombresCandidatos.length ;num++)
+        {
+            resultados = string(abi.encodePacked(resultados, "(", ListaNombresCandidatos[num], " votos: ", uint2str( Ver_Votos( ListaNombresCandidatos[num] ) ) ));
+            return(resultados);
+        }
+    }
+
+    function Ganador_Por_Votos() public view returns(string memory)
+    {
+        string memory ganador=ListaNombresCandidatos[0];
+        bool flagEmpate=false;
+
+        for (uint i=0; i < ListaNombresCandidatos.length ;i++ )
+        {
+            if (VotosCandidato[ganador] < VotosCandidato[ListaNombresCandidatos[i]])
+            {
+                ganador = ListaNombresCandidatos[i];
+                flagEmpate=false;
+            }
+            else 
+            {
+                if (VotosCandidato[ganador] == VotosCandidato[ListaNombresCandidatos[i]])
+                {
+                    flagEmpate=true;
+                }
+                else 
+                {
+                    flagEmpate=false;
+                }
+            }
+        }
+        if (flagEmpate)
+        {
+            ganador="Empate";
+        }
+        return(ganador);
+    }
 }
