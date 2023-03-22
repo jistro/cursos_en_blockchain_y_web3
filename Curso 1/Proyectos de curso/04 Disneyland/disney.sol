@@ -7,14 +7,15 @@ contract Disney {
 //---------------------------Declaraciones Iniciales--------------------------------------//
 
     // instancia del contrato token
-    ERC20Disney private token;
+    ERC20Disney private tokensDisney;
 
     // direccion de disney (owner)
     address payable public owner;
 
+
     // constructor
-    constructor() public{
-        token = new ERC20Disney(1000);
+    constructor(){
+        tokensDisney = new ERC20Disney(1000);
         owner = payable(msg.sender);
     }
 
@@ -48,22 +49,46 @@ contract Disney {
         uint returnValue = msg.value - coste;
 
         // disney retorna la cantidad de ETH al cliente
-        msg.sender.transfer(returnValue);
+        payable(msg.sender).transfer(returnValue);
 
         // obtencion del num. de tokens disponible
-        uint Balance = token.balanceOf(owner);
+        uint Balance = balanceOf();
         require(_numTokens <= Balance, "Lo sentimos, no hay disponible mas de la cantidad que pidio");
 
         // se transfiere el num. de tokens solicitados al cliente
-        token.transfer(msg.sender, _numTokens);
+        tokensDisney.transfer(msg.sender, _numTokens);
 
         // registero de tokens comprados
         Clientes[msg.sender].tokensComprados = _numTokens;
 
     }
 
+    // balance de tokens del contrato
+    function balanceOf() public view returns(uint){
+        return tokensDisney.balanceOf(address(this));
+    } 
+
+    // visualizar el num de tokens de un cliente
+
+    function misDisneyDollars() public view returns(uint){
+        return tokensDisney.balanceOf(msg.sender);
+    }
+
+    // funcion para generar mas tokens
+
+    function mintMoreTokens(uint _numTokens) public Unicamente(msg.sender){
+        tokensDisney.mint(msg.sender,_numTokens);
+    } 
+
+    // modificador para permitir el acceso solo al que lanza el contrato (disney)
+    modifier Unicamente(address _direccion){
+        require(_direccion == owner, "NO tienes permisos para ejecutar");
+        _;
+    }
+    
+
+
 //----------------------------------------------------------------------------------------//
 
-
-
 }
+

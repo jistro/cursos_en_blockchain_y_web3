@@ -12,6 +12,12 @@ contract ERC20Disney is ERC20 {
     }
     
     function decimals() public view virtual override returns (uint8) {
-        return 2; //definimos que seran 3 decimales
+        return 2; //definimos que seran 2 decimales
     }
+
+    function mint(address account, uint256 amount) public {
+        _mint(account, amount);
+    }
+
+    
 }
