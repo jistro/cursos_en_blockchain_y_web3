@@ -6,7 +6,7 @@ Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamen
 
 [Smart Contracts y Blockchain con Solidity de la A a la Z | Udemy](https://www.udemy.com/course/solidity-a-z/)
 
-**Estatus**: Cursando ▶️
+**Estatus**: [Terminado](https://www.udemy.com/certificate/UC-68287075-0fa0-458e-93b1-b43dd863bc1f/) ✅ 
 
 [Crea DApps con Tokens NFT en Ethereum usando Truffle y React | Udemy](https://www.udemy.com/course/tokens-nft-en-ethereum-con-truffle-y-react/)
 
