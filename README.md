@@ -10,15 +10,22 @@ Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamen
 
 [Crea DApps con Tokens NFT en Ethereum usando Truffle y React | Udemy](https://www.udemy.com/course/tokens-nft-en-ethereum-con-truffle-y-react/)
 
-**Estatus**: En espera de comenzar 🟨
+**Estatus**: En progreso 🚧
+
+[Curso de pagina estatica en ICP]([Internet Computer Loading](https://internetcomputer.org/docs/current/samples/host-a-website)
+
+**Estatus**: [Terminado](https://www.udemy.com/certificate/UC-68287075-0fa0-458e-93b1-b43dd863bc1f/) ✅
 
 ## Orden del repositorio
 
 De manera temporal este se ha ordenado solo para el curso que se esta tomando, en un futuro se dividira en dos carpetas que indican los dos cursos tomados
 
     .
-    ├── 📁 Curso 1        # Contiene los documentos del curso 1
+    ├── 📁 Curso 1            # Contiene los documentos del curso 1
     |    ├── 📁Ejercicios
     |    ├── 📁Libreta de notas 
     |    └── 📁Proyectos de curso
+    ├── 📁 Curso 2            # Contiene los documentos del curso 2
+    |    └── 📁05_Primer proyecto ganache 
+    ├── 📁 static-ic-website  # Contiene los datos de la pagina
     └── README.md
