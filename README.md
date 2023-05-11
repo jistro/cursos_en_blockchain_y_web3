@@ -12,7 +12,7 @@ Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamen
 
 **Estatus**: En progreso 🚧
 
-[Curso de pagina estatica en ICP]([Internet Computer Loading](https://internetcomputer.org/docs/current/samples/host-a-website)
+[Curso de pagina estatica en ICP](https://internetcomputer.org/docs/current/samples/host-a-website)
 
 **Estatus**: [Terminado](https://www.udemy.com/certificate/UC-68287075-0fa0-458e-93b1-b43dd863bc1f/) ✅
 
