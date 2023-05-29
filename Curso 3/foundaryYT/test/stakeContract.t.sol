@@ -19,7 +19,7 @@ contract ContractTest is Test {
     function testExample(uint8 amount)  public {
         mockToken.approve(address(stakeContract), amount);
         bool stakePassed = stakeContract.stake(address(mockToken), amount);
-        cheats.roll(55);
+        //cheats.roll(55);
         assertTrue(stakePassed);
     }
 }
