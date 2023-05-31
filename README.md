@@ -1,6 +1,6 @@
 # Curso de solidity
 
-Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamentales para mi tesis. Así como llevar un registro de mi progreso y resolver dudas durante el proceso de aprendizaje. 
+Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis. Así como llevar un registro de mi progreso y resolver dudas durante el proceso de aprendizaje. 
 
 ## Cursos que abarcan este repositorio
 
@@ -22,7 +22,7 @@ Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamen
 
 [Curso 5: React Course - Beginner's Tutorial for React JavaScript Library](https://www.youtube.com/watch?v=bMknfKXIFA8)
 
-
+**Estatus**: En progreso 🚧
 
 ## Orden del repositorio
 
