@@ -4,28 +4,42 @@ Este repositorio almacena mis notas y ejercicios del curso de Solidity, fundamen
 
 ## Cursos que abarcan este repositorio
 
-[Smart Contracts y Blockchain con Solidity de la A a la Z | Udemy](https://www.udemy.com/course/solidity-a-z/)
+[Curso 1: Smart Contracts y Blockchain con Solidity de la A a la Z | Udemy](https://www.udemy.com/course/solidity-a-z/)
 
 **Estatus**: [Terminado](https://www.udemy.com/certificate/UC-68287075-0fa0-458e-93b1-b43dd863bc1f/) ✅ 
 
-[Crea DApps con Tokens NFT en Ethereum usando Truffle y React | Udemy](https://www.udemy.com/course/tokens-nft-en-ethereum-con-truffle-y-react/)
+[Curso 2: Crea DApps con Tokens NFT en Ethereum usando Truffle y React | Udemy](https://www.udemy.com/course/tokens-nft-en-ethereum-con-truffle-y-react/)
 
 **Estatus**: En progreso 🚧
 
-[Curso de pagina estatica en ICP](https://internetcomputer.org/docs/current/samples/host-a-website)
+[Curso 3: Curso de pagina estatica en ICP](https://internetcomputer.org/docs/current/samples/host-a-website)
 
-**Estatus**: [Terminado](https://www.udemy.com/certificate/UC-68287075-0fa0-458e-93b1-b43dd863bc1f/) ✅
+**Estatus**: Terminado ✅
+
+[Curso 4: Curso de introduccion a Foundry por Patrick Collins](https://www.youtube.com/watch?v=fNMfMxGxeag)
+
+**Estatus**: Terminado ✅
+
+[Curso 5: React Course - Beginner's Tutorial for React JavaScript Library](https://www.youtube.com/watch?v=bMknfKXIFA8)
+
+
 
 ## Orden del repositorio
 
 De manera temporal este se ha ordenado solo para el curso que se esta tomando, en un futuro se dividira en dos carpetas que indican los dos cursos tomados
 
     .
-    ├── 📁 Curso 1            # Contiene los documentos del curso 1
+    ├── 📁 Curso 1
     |    ├── 📁Ejercicios
     |    ├── 📁Libreta de notas 
     |    └── 📁Proyectos de curso
-    ├── 📁 Curso 2            # Contiene los documentos del curso 2
-    |    └── 📁05_Primer proyecto ganache 
-    ├── 📁 static-ic-website  # Contiene los datos de la pagina
+    ├── 📁 Curso 2
+    |    ├──  📁05_Primer proyecto ganache 
+    |    ├──  📁07_Primeros pasos con Truffle
+    |    └──  📁08_Truffle con detalle
+    ├── 📁 Curso 3
+    |    └──  📁static-ic-website
+    ├── 📁 Curso 4
+    |    └──  📁FoundryYT
+    ├── 📁 Curso 5
     └── README.md
