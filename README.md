@@ -20,7 +20,7 @@ Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis. A
 
 **Estatus**: Terminado ✅
 
-[Curso 5: React Course - Beginner's Tutorial for React JavaScript Library](https://www.youtube.com/watch?v=bMknfKXIFA8)
+[Curso 5: React Course - Beginner's Tutorial for React JavaScript Library](https://scrimba.com/learn/learnreact)
 
 **Estatus**: En progreso 🚧
 
