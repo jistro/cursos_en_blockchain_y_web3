@@ -1,65 +1,24 @@
-
-
-const catinio = (
-    <div>
-        <h1>Mira este catinio</h1>
+const navBar = (
+    <nav>
         <img 
-        src="https://i.kym-cdn.com/entries/icons/original/000/026/489/crying.jpg" 
-        alt="imagen" 
-        width="400px"
-        />
-        <ul>
-            <li>catinio 1</li>
-            <li>catinio 2</li>
-            <li>catinio 3
-                <ul>
-                    <li>catinio 3.1</li>
-                    <li>catinio 3.2</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-)
-const navBarCatinio = (
-    <nav>\
-        <h1>cattttoooo</h1>
-        <ul>
-            <li>catinio 1</li>
-            <li>catinio 2</li>
-            <li>catinio 3</li>
-        </ul>
+            src="https://ethereum.org/static/c48a5f760c34dfadcf05a208dab137cc/d1ef9/eth-diamond-rainbow.png"
+            width="50px"
+            />
     </nav>
 )
 
-const armyOfSpiderman = (
+const root = (
     <div>
-        <h1>Army of Spiderman</h1>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
-        <img src="https://i.kym-cdn.com/entries/icons/original/000/003/231/dancing-spiderman.gif"
-        width="50px"/>
+        <h1>Fun Facts de Ethereum</h1>
+        <ul>
+            <li>El nombre es un homenaje a la sustancia etérea que llena el universo en la mitología griega.</li>
+            <li>El logo es un diamante con un arcoiris.</li>
+            <li>El creador es Vitalik Buterin, un ruso-canadiense de 27 años.</li>
+            <li>El primer bloque se minó el 30 de julio de 2015.</li>
+        </ul>
     </div>
 )
+
 /*
 ReactDOM.render(
     navBarCatinio,
@@ -74,10 +33,7 @@ document.getElementById("army"))
 
 ReactDOM.createRoot(
     document.getElementById("root")
-).render(catinio)
+).render(root)
 ReactDOM.createRoot(
     document.getElementById("navBar")
-).render(navBarCatinio)    
-ReactDOM.createRoot(
-    document.getElementById("army")
-).render(armyOfSpiderman)
+).render(navBar)
