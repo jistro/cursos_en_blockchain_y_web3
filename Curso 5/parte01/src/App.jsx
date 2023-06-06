@@ -1,18 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import NavBar from './components/NavBar.jsx'
+import Main from './Main.jsx'
+import './index.css'
 
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <NavBar />
+    <Main />
+    
+  </React.StrictMode>,
+)
 
-function App() {
-
-  return (
-    <>
-      <NavBar />
-      <h1>App</h1>
-    </>
-  )
-}
-
-export default App
