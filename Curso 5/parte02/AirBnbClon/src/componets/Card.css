@@ -1,0 +1,35 @@
+.Card{
+    width: 175px;
+    font-size: 12px;
+}
+
+.card__img{
+    width: 100%;
+    border-radius: 9px;
+}
+.card__star{
+    height: 15px;
+    
+}
+.card__stats{
+    display: flex;
+    align-items: center;
+}
+
+.card__rating{
+    margin-left: 5px;
+}
+
+.card__reviews{
+    margin-left: 5px;
+    color: #717171;
+}
+.card__location{
+    margin-left: 5px;
+    color: #717171;
+}
+
+.card__price{
+    font-weight: bold;
+}
+
