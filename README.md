@@ -24,6 +24,8 @@ Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis. A
 
 **Estatus**: En progreso 🚧
 
+[Curso 6: Learn Solidity, Blockchain Development, and Smart Contracts por Patrick Collins](https://www.youtube.com/watch?v=umepbfKp5rI)
+
 ## Orden del repositorio
 
 De manera temporal este se ha ordenado solo para el curso que se esta tomando, en un futuro se dividira en dos carpetas que indican los dos cursos tomados
@@ -42,4 +44,5 @@ De manera temporal este se ha ordenado solo para el curso que se esta tomando, e
     ├── 📁 Curso 4
     |    └──  📁FoundryYT
     ├── 📁 Curso 5
+    ├── 📁 Curso 6
     └── README.md
