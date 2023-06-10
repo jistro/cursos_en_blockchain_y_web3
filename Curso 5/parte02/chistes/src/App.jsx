@@ -1,11 +1,25 @@
 import { useState } from 'react'
 import './App.css'
 import Chiste from './components/Chiste'
+import chistesData from './chistesData'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const elementosChiste = chistesData.map(chiste => {
+    return  <Chiste
+              chiste={chiste.chiste}
+              punchline={chiste.punchline}
+              img={chiste.img}
+              chistoso={chiste.chistoso}
+              chistosometro={chiste.chistosometro}
+            />
+  })
   return (
+    <>
+      {elementosChiste}
+    </>
+  )
+  /*return (
     <>
       <Chiste 
         chiste="un hombre va al medico..." 
@@ -47,6 +61,7 @@ function App() {
       
     </>
   )
+  */
 }
 
 export default App
