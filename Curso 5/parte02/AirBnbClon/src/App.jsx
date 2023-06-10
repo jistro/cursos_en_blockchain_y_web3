@@ -8,8 +8,15 @@ function App() {
   return (
     <>
       <NavBar />
-      <Hero />
-      <Card />
+      <Hero/>
+      <Card 
+      img = "katie-zaferes.png"
+      title = "How to survive in Ohio with Katie Zaferes"
+      price = "25.50"
+      rating = "4.94"
+      reviews = "25"
+      location = "Ohio, USA"
+      />
     </>
   )
 }
