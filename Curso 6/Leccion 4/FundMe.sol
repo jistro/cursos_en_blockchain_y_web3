@@ -8,6 +8,13 @@ pragma solidity ^0.8.7;
 
 import {convertidorDePrecio} from "./PriceConverter.sol";
 
+// podemos ser gas friendly usando Error esto nos permite en vez de usar require
+// que almacena un string y con ello gastamos mas gas podemos usar Error que es un
+// codigo de error que es mas barato de almacenar y con ello gastamos menos gas
+// podemos usarlo en 0.8.4 o superior
+
+error NoOwner();
+
 contract FundMe {
     // indica que la libreria convertidorDePrecio esta en el archivo PriceConverter.sol
     // solo podemos usarlo para uint256
@@ -15,13 +22,24 @@ contract FundMe {
     using convertidorDePrecio for uint256;
     /// @notice the contract if for avalanche testnet
     
-    address public owner;
+    // para bajar los fees de gas usaremos const y immutable
+
+    //address public owner;
+
+    address public immutable i_owner;
     constructor() {
-        owner = msg.sender;
+        
+        //owner = msg.sender;
+        i_owner = msg.sender;
     }
 
     modifier soloOwner() {
-        require(msg.sender == owner, "solo el owner puede retirar");
+        //require(msg.sender == owner, "solo el owner puede retirar");
+        //require(msg.sender == i_owner, "solo el owner puede retirar");
+        if (msg.sender != i_owner) {
+            // revert es una funcion que se usa para revertir la transaccion
+            revert NoOwner();
+        }
         _;
     }
         
@@ -39,8 +57,8 @@ contract FundMe {
         // no se haran cambios pero si gastara gas
         require(msg.value >= 1e18, "nesecitas enviar mas de 1 ether");
     }*/
-    
-    uint256 public minimoUSD = 5e18;
+    uint256 public constant MINIMO_USD = 5e18;  //menor costo de gas
+    //uint256 public minimoUSD = 5e18;          //mayor costo de gas
 
         
 
@@ -48,13 +66,27 @@ contract FundMe {
     mapping(address donante => uint256 cantidadDonada) public donanteInfo;
 
     function fund() public payable {
-        require (msg.value.getTazaDeConversion() >= minimoUSD, "nesecitas gastar mas AVAX");
+        require (msg.value.getTazaDeConversion() >= MINIMO_USD, "nesecitas gastar mas AVAX");
         //require(getTazaDeConversion(msg.value) >= minimoUSD, "nesecitas gastar mas AVAX");
-        donantes.push(msg.sender);
         //donanteInfo[msg.sender] = donanteInfo[msg.sender] + msg.value;
         donanteInfo[msg.sender] += msg.value;
+        donantes.push(msg.sender);
         
     }
+
+    // por si la persona no usa la funcion de fund
+    // podemos usar la funcion de fallback y recive 
+    // fallback solo se usa para recibir dinero
+    // receive usa para recibir dinero y ejecutar una funcion
+
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
+
 
     function withdraw() public soloOwner {
         (bool exito,) = msg.sender.call{value: address(this).balance}("");
