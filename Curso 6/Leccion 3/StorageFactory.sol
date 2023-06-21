@@ -22,4 +22,8 @@ contract StorageFactory{
     function sfGet(uint256 _index) public view returns(uint256){
         return listOfNewStorage[_index].retrieve();
     }
+
+    function viewContractAddress(uint256 _index) public view returns(address){
+        return address(listOfNewStorage[_index]);
+    }
 }
