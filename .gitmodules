@@ -7,3 +7,6 @@
 [submodule "Curso 3/foundaryYT/lib/ds-test"]
 	path = Curso 3/foundaryYT/lib/ds-test
 	url = https://github.com/dapphub/ds-test
+[submodule "Curso 6/Leccion 6/foundry-simple-storage/lib/forge-std"]
+	path = Curso 6/Leccion 6/foundry-simple-storage/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
