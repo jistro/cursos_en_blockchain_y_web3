@@ -1,5 +1,6 @@
-# Uso de Foundry 
+# Leccion 6
 
+## Uso de Foundry
 
 Es una frame de desarrollo de smart contract, que esta escrito en rust y permite desde el desarrollo hasta el despliegue usando solamente solidity.
 
@@ -8,11 +9,12 @@ Es una frame de desarrollo de smart contract, que esta escrito en rust y permite
 - Foundry contiene su propia blockchain de pruebas llamado **anvil**
 
 - Para compilar un contrato en foundry se usa el comando `forge compile` y para desplegarlo `forge create <nombre del contrato>` ademas de eso debemos agregar ciertas flags para subirlo como 
-    - `-r` o `--rpc-url` como dice el nombre es la url del rpc de la blockchain que queremos usar
-    - `-c` o `--chain` es el id de la blockchain que queremos usar
-    - `-i` o `--interactive` para ingresar la llave privada de la cuenta que queremos usar
+  
+  - `-r` o `--rpc-url` como dice el nombre es la url del rpc de la blockchain que queremos usar
+  - `-c` o `--chain` es el id de la blockchain que queremos usar
+  - `-i` o `--interactive` para ingresar la llave privada de la cuenta que queremos usar
 
-# ejecutar scripts 
+# ejecutar scripts
 
 recordemos que foundry usa totalmente solidity por lo tanto podemos usar los scripts debemoos alamcenarlo en la carpeta de `script` y guardarlo con `.s.sol` 
 
@@ -32,13 +34,13 @@ contract DeploySimpleStorage is Script{
     }
 }
 ```
+
 al ejecutar el script foundry ejecutara anvil para el script y nos mostrara el resultado
 
 si bien `vm.startBroadcast();` es un Cheatcode que permite iniciar el broadcast de la transaccion y `vm.stopBroadcast();` lo dediene 
 
 para ejecutar usamos `forge script script/<nombre del script>.s.sol` y para subirlo a una blockchain usamos `forge script script/<nombre del script>.s.sol -r <url del rpc> -c <id de la blockchain> -i`
 o podemos cambiar `-i` por `--private-key` y agregar la llave privada de la cuenta que queremos usar
-
 
 podemos usar cast para comvertir datos 
 
@@ -52,7 +54,7 @@ PRIVATE_KEY=<llave privada>
 RPC_URL=<url del rpc>
 ```
 
-despues usamos `source .env`
+después usamos `source .env`
 
 y llamamos la funcion asi 
 
@@ -70,14 +72,14 @@ para deployar contratos en thirdweb
 
 ---
 
-para interactuar desde la consola en alguna funcion usamos 
+para interactuar desde la consola en alguna función usamos 
 `cast send <Direccion del contrato> "nombre_funcion(tipo_variable nombre_variable)" <datos de variable> --rpc-url $RPC_URL --private-key $PRIVATE_KEY`
 
 para hacer call hacemos 
 
 `cast call <direccion contrato> "nombre_funcion()"`
 
-esto saldra en hex por lo tanto debemos usar `cast --to-base <hex> dec` para convertirlo a decimal o podemos 
+esto saldrá en hex por lo tanto debemos usar `cast --to-base <hex> dec` para convertirlo a decimal o podemos 
 
 ```
   --to-ascii               Convert hex data to an ASCII string [aliases: to-ascii, tas, 2as]
@@ -104,3 +106,69 @@ esto saldra en hex por lo tanto debemos usar `cast --to-base <hex> dec` para con
   --to-wei                 Convert an ETH amount to wei [aliases: to-wei, tw, 2w]
 ```
 
+-------
+
+# Leccion 7
+
+## agregar librerias
+
+en foundry podemos instalar las librerias que usemos con
+
+```bash
+forge install <direccion de libreria en github>[@version] 
+```
+
+en la direccion para gitgub no debemos agregar el `github.com/` y la version es opcional ademas podemos agregar `--no-commit` para que git nop haga commit
+
+con esto agregaremos en automatico a la carpeta `lib` los contratos/librerias que usaremos
+
+## test
+
+`forge test` nos ayudara a testear nuestro contrato inteligente 
+
+tomaremos el ejemplo del codigo que viene por defecto cuando usamos `forge init`
+
+```solidity
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.13;
+
+import "forge-std/Test.sol";
+import "../src/Counter.sol";
+
+contract CounterTest is Test {
+    Counter public counter;
+
+    function setUp() public {
+        counter = new Counter();
+        counter.setNumber(0);
+    }
+
+    function testIncrement() public {
+        counter.increment();
+        assertEq(counter.number(), 1);
+    }
+
+    function testSetNumber(uint256 x) public {
+        counter.setNumber(x);
+        assertEq(counter.number(), x);
+    }
+}
+```
+
+en este caso hacemos fila de las funciones es decir primero setup despues test increment y consecutivo
+
+test increment lo que hace es verificar si depues de llamar a la funcion add es 1
+
+**Test siempre llamara antes que nada a la funcion `setUp()`** 
+
+si `import {Test} from "forge-std/Test.sol";` ayuda a solo testear tambien podemos hacer algo parecido a `console.log()` de js, usando `import {Test, console} from "forge-std/Test.sol";` podemos mostrar variables en consola usando
+
+```solidity
+console.log(<variable>)
+```
+
+y para ver los logs usamos el comando 
+
+```bash
+forge test -vv
+```

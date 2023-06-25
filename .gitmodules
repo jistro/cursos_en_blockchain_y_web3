@@ -1,12 +1,6 @@
-[submodule "Curso 3/foundaryYT/lib/forge-std"]
-	path = Curso 3/foundaryYT/lib/forge-std
+[submodule "Curso 6/Leccion 7/foundry-fund-me-23/lib/forge-std"]
+	path = Curso 6/Leccion 7/foundry-fund-me-23/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
-[submodule "Curso 3/foundaryYT/lib/openzeppelin-contracts"]
-	path = Curso 3/foundaryYT/lib/openzeppelin-contracts
-	url = https://github.com/OpenZeppelin/openzeppelin-contracts
-[submodule "Curso 3/foundaryYT/lib/ds-test"]
-	path = Curso 3/foundaryYT/lib/ds-test
-	url = https://github.com/dapphub/ds-test
-[submodule "Curso 6/Leccion 6/foundry-simple-storage/lib/forge-std"]
-	path = Curso 6/Leccion 6/foundry-simple-storage/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso 6/Leccion 7/foundry-fund-me-23/lib/chainlink-brownie-contracts"]
+	path = Curso 6/Leccion 7/foundry-fund-me-23/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
