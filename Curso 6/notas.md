@@ -26,8 +26,11 @@ import "forge-std/Script.sol";
 import {SimpleStorage} from "../src/SimpleStorage.sol";
 contract DeploySimpleStorage is Script{
     function run() external returns (SimpleStorage){
-        // ejecutara y mostrara cuando usemos el comando forge script
+        // antes de iniciar el broadcast no es una transaccion "real"
+        // lo hara en un entorno simulado
+
         vm.startBroadcast();
+        // despues de iniciar el broadcast es una transaccion real
         SimpleStorage simpleStorage = new SimpleStorage();
         vm.stopBroadcast();
         return simpleStorage;
@@ -171,4 +174,42 @@ y para ver los logs usamos el comando
 
 ```bash
 forge test -vv
+```
+
+si queremos testear on chain podemos usar `--fork-url <url_RPC>` esto hara un fork on chain para testear sin nesecidad de gastar gas real tanto en test net como main net
+
+```bash
+forge test --fork-url <url_RPC>
+```
+
+
+---
+Existen 4 estados de desarrollo de un contrato inteligente
+
+1) **Unit** Probamos una parte especifica del contrato
+2) **Integration** Probamos como interactua con otras partes del contrato
+3) **Forked** Probamos el codigo en un entorno simulado de la blockchain real
+4) **Straging** Probamos el codigo en la blockchain real
+
+---
+
+Podemos ver que tanto hemos cubierto en cad seccion de nuesro entorno de desarrollo usando `forge coverage`
+
+Ejemplo:
+
+```bash
+forge coverage --fork-url $SepoliaRPC
+[⠊] Compiling...
+[⠑] Compiling 24 files with 0.8.19
+[⠃] Solc 0.8.19 finished in 1.60s
+Compiler run successful!
+Analysing contracts...
+Running tests...
+| File                      | % Lines      | % Statements | % Branches    | % Funcs      |
+|---------------------------|--------------|--------------|---------------|--------------|
+| script/DEPLOYFundMe.s.sol | 0.00% (0/6)  | 0.00% (0/9)  | 100.00% (0/0) | 0.00% (0/1)  |
+| script/HelperConfig.s.sol | 0.00% (0/2)  | 0.00% (0/3)  | 100.00% (0/0) | 0.00% (0/2)  |
+| src/FundMe.sol            | 4.76% (1/21) | 3.70% (1/27) | 0.00% (0/6)   | 12.50% (1/8) |
+| src/PriceConverter.sol    | 0.00% (0/5)  | 0.00% (0/8)  | 100.00% (0/0) | 0.00% (0/2)  |
+| Total                     | 2.94% (1/34) | 2.13% (1/47) | 0.00% (0/6)   | 7.69% (1/13) |
 ```
