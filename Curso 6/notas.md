@@ -213,3 +213,9 @@ Running tests...
 | src/PriceConverter.sol    | 0.00% (0/5)  | 0.00% (0/8)  | 100.00% (0/0) | 0.00% (0/2)  |
 | Total                     | 2.94% (1/34) | 2.13% (1/47) | 0.00% (0/6)   | 7.69% (1/13) |
 ```
+---
+
+```cmd
+ forge snapshot --match-test <funcion>
+```
+si la activamos por primera vez en la carpeta se creara un documento llamado `.gas-snapshot` en el cual nos meustra el gas usado por cada funcion
