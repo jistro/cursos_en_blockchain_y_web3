@@ -2,8 +2,8 @@
 pragma solidity ^0.8.18;
 
 import {Test, console} from "forge-std/Test.sol";
-import {FundMe} from "../src/FundMe.sol";
-import {DEPLOY_FundMe} from "../script/DEPLOYFundMe.s.sol";
+import {FundMe} from "../../src/FundMe.sol";
+import {DEPLOY_FundMe} from "../../script/DEPLOYFundMe.s.sol";
 
 contract FundMeTest is Test{
 
@@ -109,6 +109,30 @@ contract FundMeTest is Test{
 
         vm.startPrank(fundMe.getOwner());
         fundMe.withdraw();
+        vm.stopPrank();
+
+        uint256 endingOwnerBalance = fundMe.getOwner().balance;
+        uint256 endingContractBalance = address(fundMe).balance;
+        assert(endingContractBalance == 0);
+        assert(fundMe.getOwner().balance == startingOwnerBalance + startingContractBalance);
+        console.log(endingOwnerBalance);
+        console.log(endingContractBalance);
+    }
+    function test_cheaperwidraw_MultipleFounders() public funded{
+        uint160 numberOfFunders = 30;
+        uint160 staringFunderIndex = 2;
+        for (uint160 i = staringFunderIndex; i < numberOfFunders; i++) {
+            hoax(address(i),10 ether);
+            fundMe.fund{value: 10 ether}();
+        }
+
+        uint256 startingOwnerBalance = fundMe.getOwner().balance;
+        uint256 startingContractBalance = address(fundMe).balance;
+        console.log(startingOwnerBalance);
+        console.log(startingContractBalance);
+
+        vm.startPrank(fundMe.getOwner());
+        fundMe.cheaperWithdraw();
         vm.stopPrank();
 
         uint256 endingOwnerBalance = fundMe.getOwner().balance;

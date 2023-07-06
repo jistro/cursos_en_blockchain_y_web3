@@ -1,5 +1,14 @@
 # Leccion 6
 
+## cosas importantes de optimizacion en smart contract
+
+1) llamar a memory es mas barato en gas que llamar a storage
+2) si no es necesario usar public en las variables de estado no lo hagas
+3) si usas public para ver una(s) variable(s) mejor ponlas private y usa una funcion para verlas
+4) si desde el `constructor` generas una variable de estado que no se va a cambiar nunca ponla como `immutable`
+
+
+
 ## Uso de Foundry
 
 Es una frame de desarrollo de smart contract, que esta escrito en rust y permite desde el desarrollo hasta el despliegue usando solamente solidity.
