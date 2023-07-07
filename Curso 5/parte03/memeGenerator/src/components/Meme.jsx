@@ -4,14 +4,24 @@ import '../memesData.jsx'
 import memesData from '../memesData.jsx'
 export default function Meme(){
     
-    const [memeImage, setMemeImage] = React.useState("")
+    const [memeData, setMemeData] = React.useState({
+        topText:"", 
+        bottomText:"",
+        meme:"http://i.imgflip.com/1bij.jpg"
+    })
+
+    const [allMemeImgs, setAllMemeImgs] = React.useState(memesData)
 
     function getMemeImg(){
-        const memeArray = memesData.data.memes
+        const memeArray = allMemeImgs.data.memes
         const memeIndex = Math.floor(Math.random() * memeArray.length)
+        const url = memeArray[memeIndex].url
         //const url = memeArray[memeIndex].url
         //console.log(url)
-        setMemeImage(memeArray[memeIndex].url)
+        setMemeData(prevMemeData => ({
+            ...prevMemeData,
+            meme: url
+        }))
     }
 
     return(
@@ -34,7 +44,7 @@ export default function Meme(){
                     Get a new meme image 🖼
                 </button>
                 <img
-                    src={memeImage}
+                    src={memeData.meme}
                     alt='meme'
                     className='meme--img'
                 />
