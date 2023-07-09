@@ -31,7 +31,7 @@ snapshot :; forge snapshot
 
 format :; forge fmt
 
-anvil :; anvil -m 'test test test test test test test test test test test junk' --steps-tracing --block-time 1
+anvil :; anvil -m 'test test test test test test test test test test test junk' --steps-tracing --block-time 5
 
 NETWORK_ARGS := --rpc-url http://localhost:8545 --private-key $(DEFAULT_ANVIL_KEY) --broadcast
 
@@ -40,7 +40,7 @@ ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
 endif
 
 deploy:
-	@forge script script/DeployFundMe.s.sol:DeployFundMe $(NETWORK_ARGS)
+	@forge script script/DEPLOYFundMe.s.sol:DEPLOY_FundMe $(NETWORK_ARGS)
 
 fund:
 	@forge script script/Interactions.s.sol:FundFundMe $(NETWORK_ARGS)
