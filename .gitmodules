@@ -7,3 +7,6 @@
 [submodule "Curso 6/Leccion 7/foundry-fund-me-23/lib/foundry-devops"]
 	path = Curso 6/Leccion 7/foundry-fund-me-23/lib/foundry-devops
 	url = https://github.com/Cyfrin/foundry-devops
+[submodule "Curso 6/Leccion09/lottery-fd/lib/forge-std"]
+	path = Curso 6/Leccion09/lottery-fd/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
