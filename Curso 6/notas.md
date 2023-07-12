@@ -1,15 +1,29 @@
-# Leccion 6
+# patrones de diseño
 
-## cosas importantes de optimizacion en smart contract
+## CEI (Check Effects Interactions)
+
+Es un patron de diseño que nos permite evitar ataques de reentrancia, es decir que un atacante pueda llamar a una funcion que modifique el estado del contrato y despues llamar a otra funcion que use ese estado modificado para su beneficio.
+
+Orden de las funciones
+
+1. Check
+    Es donde se verifica que el usuario que llama a la funcion tenga los permisos necesarios para ejecutarla
+2. Effects
+    Es donde se modifica el estado del contrato
+3. Interactions
+    Es donde se interactua con otros contratos o se envia ether
+
+# cosas importantes de optimizacion en smart contract
 
 1) llamar a memory es mas barato en gas que llamar a storage
 2) si no es necesario usar public en las variables de estado no lo hagas
 3) si usas public para ver una(s) variable(s) mejor ponlas private y usa una funcion para verlas
 4) si desde el `constructor` generas una variable de estado que no se va a cambiar nunca ponla como `immutable`
+5) si vas a interactuar con un array es mejor pasarlo a un auxiliar tipo memory y despues señalar en el index del array que quieres cambiar
 
 
 
-## Uso de Foundry
+# Uso de Foundry
 
 Es una frame de desarrollo de smart contract, que esta escrito en rust y permite desde el desarrollo hasta el despliegue usando solamente solidity.
 
@@ -23,7 +37,7 @@ Es una frame de desarrollo de smart contract, que esta escrito en rust y permite
   - `-c` o `--chain` es el id de la blockchain que queremos usar
   - `-i` o `--interactive` para ingresar la llave privada de la cuenta que queremos usar
 
-# ejecutar scripts
+## ejecutar scripts
 
 recordemos que foundry usa totalmente solidity por lo tanto podemos usar los scripts debemoos alamcenarlo en la carpeta de `script` y guardarlo con `.s.sol` 
 
@@ -118,9 +132,6 @@ esto saldrá en hex por lo tanto debemos usar `cast --to-base <hex> dec` para co
   --to-wei                 Convert an ETH amount to wei [aliases: to-wei, tw, 2w]
 ```
 
--------
-
-# Leccion 7
 
 ## agregar librerias
 

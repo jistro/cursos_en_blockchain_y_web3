@@ -7,7 +7,7 @@ export default function App(props) {
     const [cubes, setCubes] = React.useState(boxes)
 
     function toggle(id) {
-      setCubes(prevCubes => {
+      /*setCubes(prevCubes => {
         const newCubes = []
         for (let i = 0; i < prevCubes.length; i++) {
           const currentCube = prevCubes[i]
@@ -19,6 +19,11 @@ export default function App(props) {
           }
         }
         return newCubes
+      })*/
+      setCubes(prevCubes => {
+        return prevCubes.map((cube) => {
+          return cube.id === id ? {...cube, on: !cube.on} : cube
+        })
       })
     }
 

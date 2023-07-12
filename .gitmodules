@@ -10,3 +10,6 @@
 [submodule "Curso 6/Leccion09/lottery-fd/lib/forge-std"]
 	path = Curso 6/Leccion09/lottery-fd/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso 6/Leccion09/lottery-fd/lib/chainlink-brownie-contracts"]
+	path = Curso 6/Leccion09/lottery-fd/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
