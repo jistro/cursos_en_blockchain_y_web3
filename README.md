@@ -1,6 +1,6 @@
 # Curso de solidity
 
-Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis. Así como llevar un registro de mi progreso y resolver dudas durante el proceso de aprendizaje. 
+Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis y avanzar en el desarrollo web3. Así como llevar un registro de mi progreso y resolver dudas durante el proceso de aprendizaje. 
 
 ## Cursos que abarcan este repositorio
 
