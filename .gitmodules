@@ -13,3 +13,9 @@
 [submodule "Curso 6/Leccion09/lottery-fd/lib/chainlink-brownie-contracts"]
 	path = Curso 6/Leccion09/lottery-fd/lib/chainlink-brownie-contracts
 	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+[submodule "Curso 6/Leccion09/lottery-fd/lib/solmate"]
+	path = Curso 6/Leccion09/lottery-fd/lib/solmate
+	url = https://github.com/transmissions11/solmate
+[submodule "Curso 6/Leccion09/lottery-fd/lib/foundry-devops"]
+	path = Curso 6/Leccion09/lottery-fd/lib/foundry-devops
+	url = https://github.com/Cyfrin/foundry-devops

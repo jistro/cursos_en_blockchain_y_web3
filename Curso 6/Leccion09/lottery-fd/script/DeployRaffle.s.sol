@@ -4,9 +4,11 @@ pragma solidity ^0.8.18;
 import {Script} from "forge-std/Script.sol";
 import {Raffle} from "../src/Raffle.sol";
 import {HelperConfig} from "./HelperConfig.s.sol";
+import {CreateSubscription, FundSubscription, AddConsumer} from "./Interactions.s.sol";
+
 
 contract DeployRaffle is Script {
-    function run() external returns (Raffle) {
+    function run() external returns (Raffle, HelperConfig) {
         HelperConfig helperConfig = new HelperConfig();
         (
             uint256 ticketPrice, 
@@ -14,8 +16,16 @@ contract DeployRaffle is Script {
             address vrfCordinator, 
             bytes32 KeyHash,
             uint64 subscriptionId,
-            uint32 callbackGasLimit
+            uint32 callbackGasLimit,
+            address link
         ) = helperConfig.activeNetworkConfig();
+
+        if (subscriptionId == 0){
+            CreateSubscription createSubscription = new CreateSubscription();
+            subscriptionId = createSubscription.createSubscription(vrfCordinator);
+            FundSubscription fundSubscription = new FundSubscription();
+            fundSubscription.fundSubscription(vrfCordinator, subscriptionId, link);
+        }
 
         vm.startBroadcast();
             Raffle raffle = new Raffle(
@@ -27,6 +37,10 @@ contract DeployRaffle is Script {
                 callbackGasLimit
             );
         vm.stopBroadcast();
-        return raffle;
+
+        AddConsumer addConsumer = new AddConsumer();
+        addConsumer.addConsumer(address(raffle), vrfCordinator, subscriptionId);
+
+        return (raffle, helperConfig);
     }
 }

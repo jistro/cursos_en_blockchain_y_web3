@@ -81,12 +81,14 @@ contract Raffle is VRFConsumerBaseV2{
 
 
     function enterRaffle() external payable {
-        if (msg.value < i_ticketPrice) 
+        if (msg.value < i_ticketPrice) {
             revert Raffle__notEnoughAVAX();
+        }
 
-        if (s_raffleState != RaffleState.OPEN)
+        if (s_raffleState != RaffleState.OPEN){
             revert Raffle__raffleClosed();
-        
+        }
+
         s_players.push(payable(msg.sender));
 
         emit EnetedRaffle(msg.sender);
@@ -126,8 +128,10 @@ contract Raffle is VRFConsumerBaseV2{
             );
         }
         
-        if ( (block.timestamp - s_lastTimeStamp) >= i_interval )
+        if ( (block.timestamp - s_lastTimeStamp) <= i_interval ) {
             revert Raffle__notEnoughTime();
+        }
+            
         
         s_raffleState = RaffleState.CALCULATING;
 
@@ -164,5 +168,13 @@ contract Raffle is VRFConsumerBaseV2{
 
     function getTicketPrice() external view returns (uint256) {
         return i_ticketPrice;
+    }
+
+    function getRaffleState() external view returns (RaffleState) {
+        return s_raffleState;
+    }
+
+    function getPlayer(uint256 _IndexPlayer) external view returns (address) {
+        return s_players[_IndexPlayer];
     }
 }
