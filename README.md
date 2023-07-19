@@ -30,25 +30,4 @@ Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis y 
 
 [Curso 7: Web3Modal V2: Create a NFT Minting site with W3MV2 and wagmi por Tom Terado](https://youtu.be/SViUpuwLKzc)
 
-**Estatus**: En progreso 🚧
-
-## Orden del repositorio
-
-De manera temporal este se ha ordenado solo para el curso que se esta tomando, en un futuro se dividira en dos carpetas que indican los dos cursos tomados
-
-    .
-    ├── 📁 Curso 1
-    |    ├── 📁Ejercicios
-    |    ├── 📁Libreta de notas 
-    |    └── 📁Proyectos de curso
-    ├── 📁 Curso 2
-    |    ├──  📁05_Primer proyecto ganache 
-    |    ├──  📁07_Primeros pasos con Truffle
-    |    └──  📁08_Truffle con detalle
-    ├── 📁 Curso 3
-    |    └──  📁static-ic-website
-    ├── 📁 Curso 4
-    |    └──  📁FoundryYT
-    ├── 📁 Curso 5
-    ├── 📁 Curso 6
-    └── README.md
+**Estatus**: Terminado ✅
