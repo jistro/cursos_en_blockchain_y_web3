@@ -26,6 +26,12 @@ Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis y 
 
 [Curso 6: Learn Solidity, Blockchain Development, and Smart Contracts por Patrick Collins](https://www.youtube.com/watch?v=umepbfKp5rI)
 
+**Estatus**: En progreso 🚧
+
+[Curso 7: Web3Modal V2: Create a NFT Minting site with W3MV2 and wagmi por Tom Terado](https://youtu.be/SViUpuwLKzc)
+
+**Estatus**: En progreso 🚧
+
 ## Orden del repositorio
 
 De manera temporal este se ha ordenado solo para el curso que se esta tomando, en un futuro se dividira en dos carpetas que indican los dos cursos tomados
