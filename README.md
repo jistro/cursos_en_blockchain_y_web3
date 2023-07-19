@@ -1,4 +1,6 @@
-# Curso de solidity
+<Image src="https://ethereum.org/static/28214bb68eb5445dcb063a72535bc90c/f51a3/hero.png">
+
+# Cursos que he tomado de WEB3 y Blockchain
 
 Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis y avanzar en el desarrollo web3. Así como llevar un registro de mi progreso y resolver dudas durante el proceso de aprendizaje. 
 
