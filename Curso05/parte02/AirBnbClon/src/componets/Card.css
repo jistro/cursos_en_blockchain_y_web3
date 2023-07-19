@@ -1,0 +1,62 @@
+.Card{
+    width: 175px;
+    font-size: 12px;
+    flex: 0 0 auto;         /* ADD */
+    display: flex;          /* ADD */
+    flex-direction: column; /* ADD */
+    position: relative;
+}
+
+.card__img{
+    width: 100%;
+    border-radius: 9px;
+    object-fit: cover;
+    height: 250px;
+}
+.card__star{
+    height: 15px;
+    
+}
+.card__stats{
+    display: flex;
+    align-items: center;
+}
+
+.card__rating{
+    margin-left: 5px;
+}
+
+.card__reviews{
+    margin-left: 5px;
+    color: #717171;
+}
+.card__location{
+    margin-left: 5px;
+    color: #717171;
+}
+
+.card__price{
+    font-weight: bold;
+    margin-top: auto;
+}
+
+.card__description{
+    margin-top: 10px;
+    font-size: 10px;
+    color: #717171;
+}
+.card__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card__badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background-color: white;
+    padding: 5px 7px;
+    border-radius: 2px;
+    font-size:  10px;
+    font-weight: bold;
+}
