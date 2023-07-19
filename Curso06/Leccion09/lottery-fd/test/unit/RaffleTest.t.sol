@@ -96,4 +96,94 @@ contract RaffleTest is Test{
             raffle.enterRaffle{value: ticketPrice}();
         vm.stopPrank();
     }
+
+    //////////////////
+    // Check Upkeep //
+    //////////////////
+    function testCheckUpKeepReturnsFalseIfHasNoBalance() public {
+        // 1. Arrange
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+
+        // 2. Act
+        (bool upKeepNeeded,) = raffle.checkUpkeep("");
+
+        // 3. Assert
+        assert(!upKeepNeeded);
+    }
+
+    function testCheckUpKeepReturnsFalseIfRaffleNotOpen() public {
+        // 1. Arrange
+        vm.startPrank(PLAYER1);
+            raffle.enterRaffle{value: ticketPrice}();
+            vm.warp(block.timestamp + interval + 1);
+            vm.roll(block.number + 1);
+            raffle.performUpkeep("");
+        vm.stopPrank();
+        // 2. Act
+        (bool upKeepNeeded,) = raffle.checkUpkeep("");
+        // 3. Assert
+        assert(upKeepNeeded == false);
+    }
+    
+    function testCheckUpkeepReturnsFalseIfEnoughTimeHasntPassed() public {
+        // 1. Arrange
+        vm.startPrank(PLAYER1);
+            raffle.enterRaffle{value: ticketPrice}();
+            vm.warp(block.timestamp + interval - 1);
+        vm.stopPrank();
+        // 2. Act
+        (bool upKeepNeeded,) = raffle.checkUpkeep("");
+        // 3. Assert
+        assert(upKeepNeeded == false);
+    }
+
+    function testCheckUpkeepReturnsTrueWhenParametersGood() public {
+        // Arrange
+        vm.startPrank(PLAYER1);
+            raffle.enterRaffle{value: ticketPrice}();
+        vm.stopPrank();
+
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+        
+
+        // Act
+        (bool upkeepNeeded, ) = raffle.checkUpkeep("");
+
+        // Assert
+        assert(upkeepNeeded);
+    }
+
+    ////////////////////
+    // Perform Upkeep //
+    ////////////////////
+
+    function testPerformUpKeepCanOnlyRunIfUpKeepIsTrue() public {
+        vm.startPrank(PLAYER1);
+            raffle.enterRaffle{value: ticketPrice}();
+        vm.stopPrank();
+
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+        raffle.performUpkeep("");
+    }
+
+    function testPerformUpKeepRevertIfCheckUpKeepIsFalse() public {
+        uint256 aux_currentBalance = 0;
+        uint256 aux_currentPlayers = 0;
+        uint256 aux_currentState = 0;
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                Raffle.Raffle__UpkeepNotNeeded.selector,
+                aux_currentBalance,
+                aux_currentPlayers,
+                aux_currentState
+            )
+        );
+        raffle.performUpkeep("");
+        
+    }
+
+
 }

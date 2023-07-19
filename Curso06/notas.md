@@ -233,6 +233,15 @@ Running tests...
 | src/PriceConverter.sol    | 0.00% (0/5)  | 0.00% (0/8)  | 100.00% (0/0) | 0.00% (0/2)  |
 | Total                     | 2.94% (1/34) | 2.13% (1/47) | 0.00% (0/6)   | 7.69% (1/13) |
 ```
+
+tambien podemos tener un reporte de las lineas que no hemos cubierto usando 
+
+``` bash
+# reporte en consola
+forge coverage --report debug 
+# reporte en un archivo
+forge coverage --report debug > report.txt
+```
 ---
 
 ```cmd
