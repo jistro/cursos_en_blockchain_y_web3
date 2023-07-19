@@ -19,3 +19,15 @@
 [submodule "Curso 6/Leccion09/lottery-fd/lib/foundry-devops"]
 	path = Curso 6/Leccion09/lottery-fd/lib/foundry-devops
 	url = https://github.com/Cyfrin/foundry-devops
+[submodule "Curso06/Leccion09/lotteryFD/lib/forge-std"]
+	path = Curso06/Leccion09/lotteryFD/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso06/Leccion09/lotteryFD/lib/chainlink-brownie-contracts"]
+	path = Curso06/Leccion09/lotteryFD/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+[submodule "Curso06/Leccion09/lotteryFD/lib/foundry-devops"]
+	path = Curso06/Leccion09/lotteryFD/lib/foundry-devops
+	url = https://github.com/Cyfrin/foundry-devops
+[submodule "Curso06/Leccion09/lotteryFD/lib/solmate"]
+	path = Curso06/Leccion09/lotteryFD/lib/solmate
+	url = https://github.com/transmissions11/solmate
