@@ -18,16 +18,18 @@ contract CreateSubscription is Script{
             /*bytes32 KeyHash*/,
             /*uint64 subscriptionId*/,
             /*uint32 callbackGasLimit*/,
-            /*address link*/
+            /*address link*/,
+            uint256 deployerKey
         ) = helperConfig.activeNetworkConfig();
-        return createSubscription(vrfCordinator);
+        return createSubscription(vrfCordinator, deployerKey);
     }
 
     function createSubscription(
-        address _vrfCordinator
+        address _vrfCordinator,
+        uint256 _deployerKey
     ) public returns (uint64) {
         console.log("Creating subscription on Chain ID: ", block.chainid);
-        vm.startBroadcast();
+        vm.startBroadcast(_deployerKey); // usando la llave privada del deployer
             uint64 subID = VRFCoordinatorV2Mock(_vrfCordinator).createSubscription();
         vm.stopBroadcast();
         console.log("----------------------------------------------------");
@@ -55,7 +57,8 @@ contract FundSubscription is Script {
             /*bytes32 KeyHash*/,
             uint64 subscriptionId,
             /*uint32 callbackGasLimit*/,
-            address link
+            address link,
+            /*uint256 deployerKey*/
         ) = helperConfig.activeNetworkConfig();
         fundSubscription(vrfCordinator, subscriptionId, link);
     }
@@ -87,13 +90,15 @@ contract AddConsumer is Script {
     function addConsumer(
         address _raffle, 
         address vrfCordinator, 
-        uint64 subscriptionId
+        uint64 subscriptionId,
+        uint256 deployerKey
+
     ) public {
         console.log("Adding consumer on Chain ID: ", block.chainid);
         console.log("Using raffle: ", _raffle);
         console.log("Using vrfCordinator: ", vrfCordinator);
         console.log("Using subscriptionId: ", subscriptionId);
-        vm.startBroadcast();
+        vm.startBroadcast(deployerKey); // usando la llave privada del deployer
             VRFCoordinatorV2Mock(vrfCordinator).addConsumer(subscriptionId, _raffle);
         vm.stopBroadcast();
     }
@@ -106,9 +111,10 @@ contract AddConsumer is Script {
             /*bytes32 KeyHash*/,
             uint64 subscriptionId,
             /*uint32 callbackGasLimit*/,
-            /*address link*/
+            /*address link*/,
+            uint256 deployerKey
         ) = helperConfig.activeNetworkConfig();
-        addConsumer(_raffle, vrfCordinator, subscriptionId);
+        addConsumer(_raffle, vrfCordinator, subscriptionId, deployerKey);
     }
 
     function run() external {

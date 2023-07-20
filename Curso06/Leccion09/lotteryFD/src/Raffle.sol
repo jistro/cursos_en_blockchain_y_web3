@@ -61,6 +61,10 @@ contract Raffle is VRFConsumerBaseV2{
         address indexed winner
     );
 
+    event RequestedRaffleWinner(
+        uint256 indexed requestId
+    );
+
     constructor(
         uint256 _ticketPrice, 
         uint256 _interval, 
@@ -117,6 +121,8 @@ contract Raffle is VRFConsumerBaseV2{
     }
 
     //function pickWinner() external {
+
+    // performUpkeep es la funcion que se llama chainlink automation
     function performUpkeep(bytes memory /*performData*/) external {
         (bool upkeepNeeded, ) = checkUpkeep("");
 
@@ -135,16 +141,15 @@ contract Raffle is VRFConsumerBaseV2{
         
         s_raffleState = RaffleState.CALCULATING;
 
-        //uint256 requestId = 
-        i_vrfCoordinator.requestRandomWords(
+        uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_keyHash,
             i_subscriptionId,
             REQUEST_CONFIRMATIONS,
             i_callbackGasLimit,
             NUM_WORDS
         );
-
-        s_raffleState = RaffleState.CLOSED;
+        emit RequestedRaffleWinner(requestId);
+        //s_raffleState = RaffleState.CLOSED;
     }
 
     function fulfillRandomWords(
@@ -176,5 +181,17 @@ contract Raffle is VRFConsumerBaseV2{
 
     function getPlayer(uint256 _IndexPlayer) external view returns (address) {
         return s_players[_IndexPlayer];
+    }
+
+    function getRecentWinner() external view returns (address) {
+        return s_recentWinner;
+    }
+    
+    function getTotalPlayers() external view returns (uint256) {
+        return s_players.length;
+    }
+
+    function getLastTimeStamp() external view returns (uint256) {
+        return s_lastTimeStamp;
     }
 }
