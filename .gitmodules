@@ -31,3 +31,21 @@
 [submodule "Curso06/Leccion09/lotteryFD/lib/solmate"]
 	path = Curso06/Leccion09/lotteryFD/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "Curso06/Leccion09/lotteryFD/challengeNine/lib/forge-std"]
+	path = Curso06/Leccion09/lotteryFD/challengeNine/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso06/Leccion09/challengeNine/lib/forge-std"]
+	path = Curso06/Leccion09/challengeNine/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso06/Leccion10/erc20FN/lib/forge-std"]
+	path = Curso06/Leccion10/erc20FN/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso06/Leccion10/erc20FN/lib/openzeppelin-contracts"]
+	path = Curso06/Leccion10/erc20FN/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "Curso06/Leccion11/nft/lib/forge-std"]
+	path = Curso06/Leccion11/nft/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso06/Leccion11/nft/lib/openzeppelin-contracts"]
+	path = Curso06/Leccion11/nft/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
