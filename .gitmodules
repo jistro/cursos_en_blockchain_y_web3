@@ -49,3 +49,6 @@
 [submodule "Curso06/Leccion11/nft/lib/openzeppelin-contracts"]
 	path = Curso06/Leccion11/nft/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "Curso06/Leccion11/nft/lib/foundry-devops"]
+	path = Curso06/Leccion11/nft/lib/foundry-devops
+	url = https://github.com/Cyfrin/foundry-devops
