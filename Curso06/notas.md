@@ -248,3 +248,8 @@ forge coverage --report debug > report.txt
  forge snapshot --match-test <funcion>
 ```
 si la activamos por primera vez en la carpeta se creara un documento llamado `.gas-snapshot` en el cual nos meustra el gas usado por cada funcion
+
+
+## NFT 
+para el nft nesecitamos de una URI que son los metadatos del nft, estos metadatos pueden ser una imagen, un video, un audio, un pdf, etc
+https://ipfs.io/ipfs/QmZjp13pA4kTdjPtksxhF94f22EbAsLyKbi7NaCC4KpJVm
