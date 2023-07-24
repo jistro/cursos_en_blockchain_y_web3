@@ -12,7 +12,7 @@ Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis y 
 
 [Curso 2: Crea DApps con Tokens NFT en Ethereum usando Truffle y React | Udemy](https://www.udemy.com/course/tokens-nft-en-ethereum-con-truffle-y-react/)
 
-**Estatus**: En progreso 🚧
+**Estatus**: `En proceso de cambio, puede que sea eliminado ya que otros cursos abarcan mas`
 
 [Curso 3: Curso de pagina estatica en ICP](https://internetcomputer.org/docs/current/samples/host-a-website)
 
@@ -33,3 +33,9 @@ Este repositorio almacena mis notas y ejercicios, fundamentales para mi tesis y 
 [Curso 7: Web3Modal V2: Create a NFT Minting site with W3MV2 and wagmi por Tom Terado](https://youtu.be/SViUpuwLKzc)
 
 **Estatus**: Terminado ✅
+
+[Curso 8: Ceritificacion Internet Computer Protocol](https://github.com/jistro/curso_certificacion_icp_2023)
+
+`Se sincroniza con otro repo y se hara commit aqui por semanas`
+
+**Estatus**: En progreso 🚧
