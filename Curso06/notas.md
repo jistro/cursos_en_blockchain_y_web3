@@ -253,3 +253,6 @@ si la activamos por primera vez en la carpeta se creara un documento llamado `.g
 ## NFT 
 para el nft nesecitamos de una URI que son los metadatos del nft, estos metadatos pueden ser una imagen, un video, un audio, un pdf, etc
 https://ipfs.io/ipfs/QmZjp13pA4kTdjPtksxhF94f22EbAsLyKbi7NaCC4KpJVm
+
+## llamar nuestro contrato 
+`cast send <direccion contrato> "funcion(tipovariable , ...)" datovariable1, datovariable2, ... --rpc-url $RPC_URL --private-key $PRIVATE_KEY`
