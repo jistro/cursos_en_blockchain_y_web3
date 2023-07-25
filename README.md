@@ -1,4 +1,4 @@
-![banner](https://github.com/jistro/cursos_en_blockchain_y_web3/assets/22781439/6d18777a-6151-42f5-a08b-005ee608bf14)
+![banner](./README_assets/banner.png)
 
 Este repositorio almacena una colección de cursos, tutoriales y recursos que he estado o estoy utilizando para aprender sobre tecnologías blockchain y Web 3.
 
