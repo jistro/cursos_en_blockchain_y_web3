@@ -58,3 +58,6 @@
 [submodule "Curso06/Leccion12/stableCoin-defi/lib/openzeppelin-contracts"]
 	path = Curso06/Leccion12/stableCoin-defi/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "Curso06/Leccion12/stableCoin-defi/lib/chainlink-brownie-contracts"]
+	path = Curso06/Leccion12/stableCoin-defi/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
