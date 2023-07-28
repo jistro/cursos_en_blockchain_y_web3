@@ -25,16 +25,22 @@ import { AggregatorV3Interface } from "@chainlink/contracts/src/v0.8/interfaces/
  *  @dev El contrato esta vagamanete basado en el contrato DssEngine de MakerDAO
  */
 
-contract DSCEngine is ReentrancyGuard {
+contract DSEngine is ReentrancyGuard {
     //--==Errors==--/////////////////////////////////////////////
-    error DSCEngine__Constructor__TokenAndPriceFeedLengthsMustBeEqual();
-    error DSCEngine__InvalidAddress(address _address);
-    error DSCEngine__InvalidAmount(uint256 _amount);
-    error DSCEngine__TransferFailed();
+    error DSEngine__Constructor__TokenAndPriceFeedLengthsMustBeEqual();
+    error DSEngine__NeedsMoreThanZero();
+    error DSEngine__InvalidAddress(address _address);
+    error DSEngine__InvalidAmount(uint256 _amount);
+    error DSEngine__TransferFailed();
+    error DSEngine__BreakHealthFactor(uint256 _healthFactor);
+    error DSEngine__MintFailed();
 
     //--==State Variables==--////////////////////////////////////
     uint256 private constant ADDITIONAL_FEED_PRECISION = 1e10;
     uint256 private constant PRECISION = 1e18;
+    uint256 private constant LIQUIDATION_THRESHOLD = 50;
+    uint256 private constant LIQUIDATION_PRECISION = 100;
+    uint256 private constant MIN_HEALTH_FACTOR = 1;
 
     mapping(address token => address priceFeed) private s_priceFeeds;
     mapping(address user => mapping(address token => uint256 amount)) private s_collateralDeposited;
@@ -48,34 +54,43 @@ contract DSCEngine is ReentrancyGuard {
     event CollateralDeposited(
         address indexed user, 
         address indexed token, 
-        uint256 amount
+        uint256 indexed amount
+    );
+    event CollateralRedeemed(
+        address indexed user, 
+        address indexed token, 
+        uint256 indexed amount
     );
 
     //--==Modifiers==--//////////////////////////////////////////
 
     modifier moreThanZero(uint256 _amount) {
         if (_amount == 0) {
-            revert DSCEngine__InvalidAmount(_amount);
+            revert DSEngine__NeedsMoreThanZero();
         }
         _;
     }
 
     modifier isAlloweToken(address _tokenAddress) {
         if (s_priceFeeds[_tokenAddress] == address(0)) {
-            revert DSCEngine__InvalidAddress(_tokenAddress);
+            revert DSEngine__InvalidAddress(_tokenAddress);
         }
         _;
     }
 
     //////////////////////--==Functions==--//////////////////////
     //--==Constructor==--////////////////////////////////////////
-    constructor(address[] memory tokensAddresses, address[] memory priceFeedsAddresses, address dsTokenAddress) {
+    constructor(
+    address[] memory tokensAddresses, 
+    address[] memory priceFeedsAddresses, 
+    address dsTokenAddress
+    ) {
         /**
          *  @dev only USD Price Feed
          *  for example: ETH/USD, BTC/USD, ...
          */
         if (tokensAddresses.length != priceFeedsAddresses.length) {
-            revert DSCEngine__Constructor__TokenAndPriceFeedLengthsMustBeEqual();
+            revert DSEngine__Constructor__TokenAndPriceFeedLengthsMustBeEqual();
         }
         for (uint256 i = 0; i < tokensAddresses.length; i++) {
             s_priceFeeds[tokensAddresses[i]] = priceFeedsAddresses[i];
@@ -86,14 +101,29 @@ contract DSCEngine is ReentrancyGuard {
 
     //--==External Functions==--/////////////////////////////////
 
-    function depositCollateralAndMintDS() external {}
+    /**
+     * 
+     *  @param tokenCollateralAddress The address of the collateral token
+     *  @param amountCollateral The amount of collateral to deposit
+     *  @param amountDSToMint The amount of DS to mint
+     *  @notice this function will deposit collateral and mint DS in one transaction
+     */
+    function depositCollateralAndMintDS(
+    address tokenCollateralAddress,
+    uint256 amountCollateral,
+    uint256 amountDSToMint
+    ) external {
+        depositCollateral(tokenCollateralAddress, amountCollateral);
+        mintDS(amountDSToMint);
+    }
+
     /**
      *  @notice follows CEI pattern (Check-Effect-Interaction)
      *  @param tokenCollateralAddress The address of the collateral token
      *  @param amountCollateral The amount of collateral to deposit
      */
     function depositCollateral(address tokenCollateralAddress, uint256 amountCollateral)
-        external
+        public
         moreThanZero(amountCollateral)
         isAlloweToken(tokenCollateralAddress)
         nonReentrant
@@ -102,13 +132,37 @@ contract DSCEngine is ReentrancyGuard {
         emit CollateralDeposited(msg.sender, tokenCollateralAddress, amountCollateral);
         bool success = IERC20(tokenCollateralAddress).transferFrom(msg.sender, address(this), amountCollateral);
         if (!success) {
-            revert DSCEngine__TransferFailed();
+            revert DSEngine__TransferFailed();
         }
     }
 
-    function redeemCollateral() external {}
+    function redeemCollateral(address tokenCollateralAddress, uint256 amountCollateral) 
+    public moreThanZero(amountCollateral) nonReentrant {
+        s_collateralDeposited[msg.sender][tokenCollateralAddress] -= amountCollateral;
+        emit CollateralRedeemed(msg.sender, tokenCollateralAddress, amountCollateral);
+        bool success = IERC20(tokenCollateralAddress).transfer(msg.sender, amountCollateral);
+        if (!success) {
+            revert DSEngine__TransferFailed();
+        }
+        _revertIfHealthFactorIsBroken(msg.sender);
+    }
 
-    function redeemCollateralForDS() external {}
+    /**
+     * 
+     *  @param tokenCollateralAddress The address of the collateral token
+     *  @param amountCollateral The amount of collateral to redeem
+     *  @param amountDSToBurn  The amount of DS to burn
+     *  @notice this function will burn DS and redeem collateral in one transaction
+     */
+    function redeemCollateralForDS(
+    address tokenCollateralAddress, 
+    uint256 amountCollateral, 
+    uint256 amountDSToBurn
+    ) external {
+        burnDS(amountDSToBurn);
+        /// @dev redeemCollateral revert if the health factor is broken
+        redeemCollateral(tokenCollateralAddress, amountCollateral);
+    }
 
     /**
      *  @notice follows CEI pattern (Check-Effect-Interaction)
@@ -116,12 +170,24 @@ contract DSCEngine is ReentrancyGuard {
      *  @notice they must have more collateral than the amount of 
      *  DS they want to mint (minimun threshold)
      */
-    function mintDS(uint256 amountToMint) external moreThanZero(amountToMint) nonReentrant{
+    function mintDS(uint256 amountToMint) public moreThanZero(amountToMint) nonReentrant{
         s_DSMinted[msg.sender] += amountToMint;
         _revertIfHealthFactorIsBroken(msg.sender);
+        bool minted = i_ds.mint(msg.sender, amountToMint);
+        if (!minted) {
+            revert DSEngine__MintFailed();
+        }
     }
 
-    function burnDS() external {}
+    function burnDS(uint256 amount) public moreThanZero(amount) nonReentrant{
+        s_DSMinted[msg.sender] -= amount;
+        bool success = i_ds.transferFrom(msg.sender, address(this), amount);
+        if (!success) {
+            revert DSEngine__TransferFailed();
+        }
+        i_ds.burn(amount);
+        _revertIfHealthFactorIsBroken(msg.sender); // if for preventing HF break but IDK if it's necessary
+    }
 
     function liquidate() external {}
 
@@ -142,9 +208,12 @@ contract DSCEngine is ReentrancyGuard {
      *  @param user The address of the user to check
      *  @notice returns how close to the liquidation threshold the user is
      *  if a user goes below the liquidation threshold, they can be liquidated
+     *  MUST BE 200% COLLATERALIZED
      */ 
     function _healthFactor(address user) private view returns (uint256) {
         (uint256 totalDSMinted, uint256 collateralValueInUsd) = _getAccountInfo(user);
+        uint256 collateralAdjustedForThreshold = (collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION;
+        return (collateralAdjustedForThreshold * PRECISION) / totalDSMinted;
     }
 
     /**
@@ -155,7 +224,10 @@ contract DSCEngine is ReentrancyGuard {
      *      i. if not, revert
      */
     function _revertIfHealthFactorIsBroken(address user) internal view {
-        
+        uint256 healthFactor = _healthFactor(user);
+        if (healthFactor < MIN_HEALTH_FACTOR) {
+            revert DSEngine__BreakHealthFactor(healthFactor);
+        }
     }
 
     //--==Public and External View Functions==--/////////////////
