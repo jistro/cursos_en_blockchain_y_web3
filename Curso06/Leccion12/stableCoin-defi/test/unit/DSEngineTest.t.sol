@@ -7,6 +7,8 @@ import { DSEngine } from "../../src/DSEngine.sol";
 import { DeployDS } from "../../script/DeployDS.s.sol";
 import { HelperConfig } from "../../script/HelperConfig.s.sol";
 import { ERC20Mock } from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
+import { MockV3Aggregator } from "../mocks/MockV3Aggregator.sol";
+import {MockFailedMintDS} from "../mocks/MockFailedMintDS.sol";
 
 contract DSEngineTest is Test {
     DeployDS deployer;
@@ -24,7 +26,10 @@ contract DSEngineTest is Test {
     //--==constants==--//
     uint256 public constant AMOUNT_COLLATERAL = 10e18;
     uint256 public constant STARTING_ERC20_BALANCE = 10 ether;
+    uint256 public constant MIN_HEALTH_FACTOR = 1e18;
+    uint256 public constant LIQUIDATION_THRESHOLD = 50;
 
+    uint256 amountToMint = 100 ether;
     function setUp() public {
         deployer = new DeployDS();
         (dsc, dse, config) = deployer.run();
@@ -103,4 +108,100 @@ contract DSEngineTest is Test {
         assertEq(expectedDepositAmount, AMOUNT_COLLATERAL);
         
     }
+
+    function testCanDepositCollateralWithoutMinting() public depositWETHCollateral {
+        uint256 userBalance = dsc.balanceOf(user1);
+        assertEq(userBalance, 0);
+    }
+
+    function testCanDepositedCollateralAndGetAccountInfo() public depositWETHCollateral {
+        (uint256 totalDscMinted, uint256 collateralValueInUsd) = dse.getAccountInfo(user1);
+        uint256 expectedDepositedAmount = dse.getUSDValue(weth, collateralValueInUsd);
+        assertEq(totalDscMinted, 0);
+    }
+    //---==Deposit and Mint Tests==---/////////////////////////////////////////////
+    function testRevertsIfMintedDscBreaksHealthFactor() public {
+        (, int256 price,,,) = MockV3Aggregator(wethUsdPriceFeed).latestRoundData();
+         amountToMint = (AMOUNT_COLLATERAL * (uint256(price) * dse.getAdditionalFeedPrecision())) / dse.getPrecision();
+        vm.startPrank(user1);
+        ERC20Mock(weth).approve(address(dse), AMOUNT_COLLATERAL);
+
+        uint256 expectedHealthFactor =
+            dse.calculateHealthFactor(amountToMint, dse.getUSDValue(weth, AMOUNT_COLLATERAL));
+        vm.expectRevert(abi.encodeWithSelector(DSEngine.DSEngine__BreakHealthFactor.selector));
+        dse.depositCollateralAndMintDS(weth, AMOUNT_COLLATERAL, amountToMint);
+        vm.stopPrank();
+    }
+
+    modifier depositedCollateralAndMintedDsc() {
+        vm.startPrank(user1);
+        ERC20Mock(weth).approve(address(dse), AMOUNT_COLLATERAL);
+        dse.depositCollateralAndMintDS(weth, AMOUNT_COLLATERAL, amountToMint);
+        vm.stopPrank();
+        _;
+    }
+
+    function testCanMintWithDepositedCollateral() public depositedCollateralAndMintedDsc {
+        uint256 userBalance = dsc.balanceOf(user1);
+        assertEq(userBalance, amountToMint);
+    }
+
+    ///---==Mint DS Tests==---/////////////////////////////////////////////////////
+    function testRevertsIfMintFails() public {
+        // Arrange - Setup
+        MockFailedMintDS mockDs = new MockFailedMintDS();
+        t_tokenAddresses = [weth];
+        t_priceFeedAddresses = [wethUsdPriceFeed];
+        address owner = msg.sender;
+        vm.prank(owner);
+        DSEngine mockDse = new DSEngine(
+            t_tokenAddresses,
+            t_priceFeedAddresses,
+            address(mockDs)
+        );
+        mockDs.transferOwnership(address(mockDse));
+        // Arrange - User
+        vm.startPrank(user1);
+        ERC20Mock(weth).approve(address(mockDse), AMOUNT_COLLATERAL);
+
+        vm.expectRevert(DSEngine.DSEngine__MintFailed.selector);
+        mockDse.depositCollateralAndMintDS(weth, AMOUNT_COLLATERAL, amountToMint);
+        vm.stopPrank();
+    }
+
+    function testRevertsIfMintAmountIsZero() public {
+        vm.startPrank(user1);
+        ERC20Mock(weth).approve(address(dse), AMOUNT_COLLATERAL);
+        dse.depositCollateralAndMintDS(weth, AMOUNT_COLLATERAL, amountToMint);
+        vm.expectRevert(DSEngine.DSEngine__NeedsMoreThanZero.selector);
+        dse.mintDS(0);
+        vm.stopPrank();
+    }
+
+    function testRevertsIfMintAmountBreaksHealthFactor() public {
+        // 0xe580cc6100000000000000000000000000000000000000000000000006f05b59d3b20000
+        // 0xe580cc6100000000000000000000000000000000000000000000003635c9adc5dea00000
+        (, int256 price,,,) = MockV3Aggregator(wethUsdPriceFeed).latestRoundData();
+        amountToMint = (AMOUNT_COLLATERAL * (uint256(price) * dse.getAdditionalFeedPrecision())) / dse.getPrecision();
+
+        vm.startPrank(user1);
+        ERC20Mock(weth).approve(address(dse), AMOUNT_COLLATERAL);
+        dse.depositCollateral(weth, AMOUNT_COLLATERAL);
+
+        uint256 expectedHealthFactor =
+            dse.calculateHealthFactor(amountToMint, dse.getUSDValue(weth, AMOUNT_COLLATERAL));
+        vm.expectRevert(abi.encodeWithSelector(DSEngine.DSEngine__BreakHealthFactor.selector));
+        dse.mintDS(amountToMint);
+        vm.stopPrank();
+    }
+
+    function testCanMintDsc() public depositWETHCollateral {
+        vm.prank(user1);
+        dse.mintDS(amountToMint);
+
+        uint256 userBalance = dsc.balanceOf(user1);
+        assertEq(userBalance, amountToMint);
+    }
+
+
 }
