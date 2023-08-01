@@ -5,6 +5,7 @@ import { DecentralizedStableCoin } from "./DecentralizedStableCoin.sol";
 import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { AggregatorV3Interface } from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import { OracleLib } from "./library/OracleLib.sol";
 
 /**
  *  @title Engine for Decentralized Stable Coin (DS)
@@ -36,6 +37,9 @@ contract DSEngine is ReentrancyGuard {
     error DSEngine__MintFailed();
     error DSEngine__HealthFactorIsHealthy();
     error DSEngine__HealthFactorNotImproved();
+
+    //--==Types==--//////////////////////////////////////////////
+    using OracleLib for AggregatorV3Interface;
 
     //--==State Variables==--////////////////////////////////////
     uint256 private constant ADDITIONAL_FEED_PRECISION = 1e10;
@@ -75,7 +79,7 @@ contract DSEngine is ReentrancyGuard {
         _;
     }
 
-    modifier isAlloweToken(address _tokenAddress) {
+    modifier isAllowedToken(address _tokenAddress) {
         if (s_priceFeeds[_tokenAddress] == address(0)) {
             revert DSEngine__InvalidAddress();
         }
@@ -129,8 +133,8 @@ contract DSEngine is ReentrancyGuard {
     function depositCollateral(address tokenCollateralAddress, uint256 amountCollateral)
         public
         moreThanZero(amountCollateral)
-        isAlloweToken(tokenCollateralAddress)
         nonReentrant
+        isAllowedToken(tokenCollateralAddress)
     {
         s_collateralDeposited[msg.sender][tokenCollateralAddress] += amountCollateral;
         emit CollateralDeposited(msg.sender, tokenCollateralAddress, amountCollateral);
@@ -320,7 +324,7 @@ contract DSEngine is ReentrancyGuard {
     uint256 usdAmountInWei
     ) public view returns (uint256) {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(s_priceFeeds[tokenAddress]);
-        (,int256 price,,,) = priceFeed.latestRoundData();
+        (,int256 price,,,) = priceFeed.staleCheckLatestRoundData();
         return (usdAmountInWei * PRECISION) / (uint256(price) * ADDITIONAL_FEED_PRECISION);
     }
 
@@ -342,7 +346,7 @@ contract DSEngine is ReentrancyGuard {
 
     function getUSDValue(address token, uint256 amount) public view returns (uint256) {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(s_priceFeeds[token]);
-        (,int256 price,,,) = priceFeed.latestRoundData();
+        (,int256 price,,,) = priceFeed.staleCheckLatestRoundData();
         return ((uint256(price) * ADDITIONAL_FEED_PRECISION) * amount) / PRECISION;
     }
 
@@ -350,6 +354,7 @@ contract DSEngine is ReentrancyGuard {
     external view returns (uint256 totalDSMinted, uint256 collateralValueInUsd) {
         (totalDSMinted,collateralValueInUsd)  = _getAccountInfo(user);
     }
+
     function getPrecision() external pure returns (uint256) {
         return PRECISION;
     }
@@ -385,5 +390,8 @@ contract DSEngine is ReentrancyGuard {
     function getHealthFactor(address user) external view returns (uint256) {
         return _healthFactor(user);
     }   
-        
+    
+    function getCollateralBalanceOfUser(address token, address user) external view returns (uint256) {
+        return s_collateralDeposited[user][token];
+    }
 }

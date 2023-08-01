@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/*
 pragma solidity ^0.8.20;
 
 import { Test, console } from "forge-std/Test.sol";
@@ -16,7 +17,7 @@ Our invariants
 1- the total supply of DS should be less than the total collateral
 2- getter view functions should never revert
 */
-
+/*
 contract OpenInvariantTest is StdInvariant, Test {
     DeployDS deployer;
     DSEngine dse;
@@ -36,7 +37,7 @@ contract OpenInvariantTest is StdInvariant, Test {
             wbtcUsdPriceFeed,
             weth,
             wbtc,
-            /*deployerKey*/
+            /*deployerKey*/ /*
         ) = config.activeNetworkConfig();
         targetContract(address(dse));
     }
@@ -54,3 +55,4 @@ contract OpenInvariantTest is StdInvariant, Test {
         assert (wethValue + wbtcValue >= totalSupply);
     }
 }
+*/

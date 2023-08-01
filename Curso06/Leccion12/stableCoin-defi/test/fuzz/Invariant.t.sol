@@ -10,7 +10,8 @@ import { HelperConfig } from "../../script/HelperConfig.s.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ERC20Mock } from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
 import { MockV3Aggregator } from "../mocks/MockV3Aggregator.sol";
-import {MockFailedMintDS} from "../mocks/MockFailedMintDS.sol";
+import { MockFailedMintDS } from "../mocks/MockFailedMintDS.sol";
+import { Handler } from "./Handler.t.sol";
 /*
 Our invariants
 1- the total supply of DS should be less than the total collateral
@@ -22,6 +23,7 @@ contract InvariantTest is StdInvariant, Test {
     DSEngine dse;
     DecentralizedStableCoin dsc;
     HelperConfig config;
+    Handler handler;
 
     address wethUsdPriceFeed;
     address weth;
@@ -38,7 +40,9 @@ contract InvariantTest is StdInvariant, Test {
             wbtc,
             /*deployerKey*/
         ) = config.activeNetworkConfig();
-        targetContract(address(dse));
+        //targetContract(address(dse));
+        handler = new Handler(dse, dsc);
+        targetContract(address(handler));
     }
 
     function invariant_protocolMustHaveMoreValueThanTheTotalSupply() public view {
@@ -48,9 +52,22 @@ contract InvariantTest is StdInvariant, Test {
 
         uint256 wethValue = dse.getUSDValue(weth, totalWETHDeposited);
         uint256 wbtcValue = dse.getUSDValue(wbtc, totalWBTCDeposited);
+        
         console.log("wethValue: ", wethValue);
         console.log("wbtcValue: ", wbtcValue);
         console.log("totalSupply: ", totalSupply);
+        console.log("timesMintIsCalled: ", handler.timesMintIsCalled());
+
         assert (wethValue + wbtcValue >= totalSupply);
+    }
+
+    function invariant_gettersShouldNotRevert() public view{
+        dse.getPrecision();
+        dse.getAdditionalFeedPrecision();
+        dse.getLiquidationThreshold();
+        dse.getLiquidationBonus();
+        dse.getMinHealthFactor();
+        dse.getCollateralTokens();
+        dse.getDsc();
     }
 }
