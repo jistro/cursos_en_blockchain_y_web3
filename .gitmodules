@@ -73,3 +73,9 @@
 [submodule "Curso06/Leccion13/uups-upgrade/lib/foundry-devops"]
 	path = Curso06/Leccion13/uups-upgrade/lib/foundry-devops
 	url = https://github.com/chainaccelorg/foundry-devops
+[submodule "Curso06/Leccion14/dao/lib/forge-std"]
+	path = Curso06/Leccion14/dao/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Curso06/Leccion14/dao/lib/openzeppelin-contracts"]
+	path = Curso06/Leccion14/dao/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
