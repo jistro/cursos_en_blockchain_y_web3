@@ -22,11 +22,11 @@ Este repositorio almacena una colección de cursos, tutoriales y recursos que he
 
 [Curso 5: React Course - Beginner's Tutorial for React JavaScript Library](https://scrimba.com/learn/learnreact)
 
-**Estatus**: En progreso 🚧
+**Estatus**: Terminado ✅
 
 [Curso 6: Learn Solidity, Blockchain Development, and Smart Contracts por Patrick Collins](https://www.youtube.com/watch?v=umepbfKp5rI)
 
-**Estatus**: En progreso 🚧
+**Estatus**: Terminado ✅
 
 [Curso 7: Web3Modal V2: Create a NFT Minting site with W3MV2 and wagmi por Tom Terado](https://youtu.be/SViUpuwLKzc)
 
@@ -34,6 +34,8 @@ Este repositorio almacena una colección de cursos, tutoriales y recursos que he
 
 [Curso 8: Ceritificacion Internet Computer Protocol](https://github.com/jistro/curso_certificacion_icp_2023)
 
-`Se sincroniza con otro repo y se hara commit aqui por semanas`
+**Estatus**:  Terminado ✅
+
+[Curso 9: Curso de introduccion a la programacion en Rust](https://www.linkedin.com/learning/rust-essential-training/)
 
 **Estatus**: En progreso 🚧
